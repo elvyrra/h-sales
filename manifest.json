@@ -1,0 +1,7 @@
+{
+    "title": "Estimates and invoices",
+    "description": "This plugin provides two engines to edit estimates and invoices, generated PDF files from your edited documents, that can be sent to your client",
+    "version": "0.0.1",
+    "author": "Elvyrra S.A.S",
+    "dependencies": []
+}

@@ -1,0 +1,110 @@
+#quote-accordion {
+    margin-top: 2rem;
+}
+#h-sales-quote-form{
+    #h-sales-quote-form-body {
+        .content-title {
+            font-weight: bold;
+        }
+
+        ol {
+            @padding: 1rem;
+
+            list-style-type: none;
+
+            &.content-wrapper{
+                padding-left: 0;
+            }
+            &.children {
+                padding-left: @padding;
+            }
+
+
+            .content-line {
+                border : 1px solid #ddd;
+                border-radius: .4rem;
+
+                @line-height : 3.2rem;
+                min-height: @line-height;
+                div {
+                    line-height : @line-height;
+                }
+
+                @first-columns-width : 8.5rem;
+
+                .line-actions {
+                    // width: @first-columns-width;
+                    font-size: 1.2rem;
+                    .dropdown {
+                        .move-line {
+                            display: inline-block;
+                            background: #ddd;
+                            height: 100%;
+                            width : @line-height;
+                            line-height: @line-height;
+                            text-align: center;
+                            margin-left: -1.5rem;
+                        }
+
+                        .dropdown-toggle {
+                            line-height: @line-height;
+                        }
+                    }
+                }
+
+                .line-duty-total {
+                    text-align: right;
+                }
+
+                &.title-line {
+                    font-weight: bold;
+                }
+
+                &.element-line {
+                    font-size: 1.2rem;
+                }
+
+                .level(@level) {
+                    &.level-@{level} {
+                        @pad : (@padding * (@level - 1));
+
+                        &.title-line {
+                            @font-size : 1.6rem - (@level * .1rem);
+                            font-size: @font-size;
+
+                            input[type="text"], textarea {
+                                font-size: @font-size;
+                            }
+                        }
+
+                        .line-label {
+                            margin-left: -@pad;
+                            padding-left: @pad + 1.5rem;
+                        }
+
+                    }
+                }
+
+                .level(1);
+                .level(2);
+                .level(3);
+                .level(4);
+
+
+                input, div[contenteditable] {
+                    width: 100%;
+                    border: none;
+                    background: none;
+                    color: inherit;
+                }
+
+
+                div[contenteditable] {
+                    line-height: 1.2rem;
+                    padding: 1rem .3rem 0 .3rem;
+                    min-height: @line-height;
+                }
+            }
+        }
+    }
+}
