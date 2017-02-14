@@ -6,35 +6,33 @@
 
 namespace Hawk\Plugins\HSales;
 
-class TemplateController extends Controller
-{
-
-
+class TemplateController extends Controller {
     /**
      * Index page
      */
-    public function index()
-    {
+    public function index() {
+        $list = new ItemList(array(
+            'id' => 'h-sales-templates-list',
+            'model' => 'DocTemplate',
+            'fields' => array(
 
-    }//end index()
+            )
+        ));
+    }
 
 
     /**
      * Display the list of templates
      */
-    public function displayList()
-    {
+    public function displayList() {
 
-    }//end displayList()
+    }
 
 
     /**
      * Edit a template
      */
-    public function edit()
-    {
+    public function edit() {
 
-    }//end edit()
-
-
-}//end class
+    }
+}

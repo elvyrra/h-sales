@@ -50,7 +50,11 @@ class Quote extends Model {
         ),
 
         'status' => array(
-            'type' => 'ENUM("edition", "sent", "accepted", "refused", "billed")'
+            'type' => 'ENUM("edition", "sent", "accepted", "refused")'
+        ),
+
+        'billed' => array(
+            'type' => 'TINYINT(1)'
         ),
 
         'dutyTotal' => array(

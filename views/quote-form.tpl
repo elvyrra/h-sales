@@ -10,6 +10,7 @@
         <div class="col-sm-6">
             <div class="pull-right">
                 {{ $form->inputs['status'] }}
+                {{ $form->inputs['billed'] }}
             </div>
         </div>
     </div>

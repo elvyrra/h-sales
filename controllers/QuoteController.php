@@ -45,7 +45,13 @@ class QuoteController extends Controller{
                     'label' => Lang::get($this->_plugin . '.quotes-list-client-label'),
                     'display' => function($value) {
                         return Client::getById($value)->getDisplayedName();
-                    }
+                    },
+                    'href' => function($value) {
+                        return App::router()->getUri('h-sales-client-file', array(
+                            'id' => $value
+                        ));
+                    },
+                    'target' => 'newtab'
                 ),
 
                 'dutyTotal' => array(
@@ -224,6 +230,16 @@ class QuoteController extends Controller{
                         'attributes' => array(
                             'e-value' => 'status'
                         )
+                    )),
+
+                    new RadioInput(array(
+                        'name' => 'billed',
+                        'disabled' => true,
+                        'label' => 'Facturé ?',
+                        'options' => array(
+                            0 => Lang::get('main.no-txt'),
+                            1 => Lang::get('main.yes-txt')
+                        )
                     ))
                 ),
 
@@ -337,7 +353,7 @@ class QuoteController extends Controller{
      */
     private function getStatusOptions(){
         $result = array();
-        foreach(array('edition', 'sent', 'accepted', 'refused', 'billed') as $status){
+        foreach(array('edition', 'sent', 'accepted', 'refused') as $status){
             $result[$status] = Lang::get($this->_plugin . '.quote-status-' . $status);
         }
 
