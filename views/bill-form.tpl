@@ -16,7 +16,7 @@
     </div>
 
     <fieldset>
-        <legend>{text key='h-sales.quote-form-client-panel-title'}</legend>
+        <legend>{text key='h-sales.bill-form-client-panel-title'}</legend>
         {{ $form->inputs['clientId'] }}
         {{ $form->inputs['clientName'] }}
         {{ $form->inputs['clientAddressLine1'] }}
@@ -32,22 +32,22 @@
     {{ $form->inputs['content'] }}
     <div class="row">
         <div class="col-xs-12">
-            {button class="btn-primary" icon="font" label="{text key='h-sales.quote-form-add-title'}" e-click="$root.addLine(null, null, true)"}
-            {button class="btn-success" icon="plus-circle" label="{text key='h-sales.quote-form-add-line'}" e-click="$root.addLine()"}
+            {button class="btn-primary" icon="font" label="{text key='h-sales.bill-form-add-title'}" e-click="$root.addLine(null, null, true)"}
+            {button class="btn-success" icon="plus-circle" label="{text key='h-sales.bill-form-add-line'}" e-click="$root.addLine()"}
         </div>
     </div>
     <div class="row content-title">
         <div class="col-xs-1 line-actions"></div>
-        <div class="col-xs-1">{text key="h-sales.quote-form-line-number"}</div>
-        <div class="col-xs-5 line-label">{text key="h-sales.quote-form-line-title"}</div>
-        <div class="col-xs-1">{text key="h-sales.quote-form-line-quantity"}</div>
-        <div class="col-xs-1">{text key="h-sales.quote-form-line-unit"}</div>
-        <div class="col-xs-1">{text key="h-sales.quote-form-line-unit-price"}</div>
-        <div class="col-xs-1">{text key="h-sales.quote-form-line-duty-total"}</div>
-        <div class="col-xs-1">{text key="h-sales.quote-form-line-tax-rate"}</div>
+        <div class="col-xs-1">{text key="h-sales.bill-form-line-number"}</div>
+        <div class="col-xs-5 line-label">{text key="h-sales.bill-form-line-title"}</div>
+        <div class="col-xs-1">{text key="h-sales.bill-form-line-quantity"}</div>
+        <div class="col-xs-1">{text key="h-sales.bill-form-line-unit"}</div>
+        <div class="col-xs-1">{text key="h-sales.bill-form-line-unit-price"}</div>
+        <div class="col-xs-1">{text key="h-sales.bill-form-line-duty-total"}</div>
+        <div class="col-xs-1">{text key="h-sales.bill-form-line-tax-rate"}</div>
     </div>
 
-    <template id="quote-line-template">
+    <template id="bill-line-template">
         <div class="row content-line" e-class="{
                                             ['level-' + level] : true,
                                             'title-line' : isTitle,
@@ -62,39 +62,39 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#" e-click="$root.addLine($this, null, true)" e-show="isTitle && level < $this.constructor.MAX_DEPTH - 1">
-                                {icon icon="indent" size="fw" class="text-primary"} {text key="h-sales.quote-form-add-subtitle"}
+                                {icon icon="indent" size="fw" class="text-primary"} {text key="h-sales.bill-form-add-subtitle"}
                             </a>
                         </li>
                         <li>
                             <a href="#" e-click="$root.addLine($this.getParent(), $index, true)" e-show="isTitle">
-                                {icon icon="caret-up" size="fw" class="text-primary"} {text key="h-sales.quote-form-add-title-before"}
+                                {icon icon="caret-up" size="fw" class="text-primary"} {text key="h-sales.bill-form-add-title-before"}
                             </a>
                         </li>
                         <li>
                             <a href="#" e-click="$root.addLine($this.getParent(), $index + 1, true)" e-show="isTitle">
-                                {icon icon="caret-down" size="fw" class="text-primary"} {text key="h-sales.quote-form-add-title-after"}
+                                {icon icon="caret-down" size="fw" class="text-primary"} {text key="h-sales.bill-form-add-title-after"}
                             </a>
                         </li>
                         <li role="separator" class="divider" e-show="isTitle"></li>
                         <li>
                             <a href="#" e-click="$root.addLine($this)" e-show="isTitle">
-                                {icon icon="plus-circle" size="fw" class="text-info"} {text key="h-sales.quote-form-add-line-under"}
+                                {icon icon="plus-circle" size="fw" class="text-info"} {text key="h-sales.bill-form-add-line-under"}
                             </a>
                         </li>
                         <li>
                             <a href="#" e-click="$root.addLine($this.getParent(), $index)" e-show="!isTitle">
-                                {icon icon="caret-up" size="fw" class="text-info"} {text key="h-sales.quote-form-add-line-before"}
+                                {icon icon="caret-up" size="fw" class="text-info"} {text key="h-sales.bill-form-add-line-before"}
                             </a>
                         </li>
                         <li>
                             <a href="#" e-click="$root.addLine($this.getParent(), $index + 1)" e-show="!isTitle">
-                                {icon icon="caret-down" size="fw" class="text-info"} {text key="h-sales.quote-form-add-line-after"}
+                                {icon icon="caret-down" size="fw" class="text-info"} {text key="h-sales.bill-form-add-line-after"}
                             </a>
                         </li>
                         <li role="separator" class="divider"></li>
                         <li>
                             <a href="#" e-click="$root.deleteLine($this, false)">
-                                {icon icon="trash" size="fw" class="text-danger"} {text key="h-sales.quote-form-delete-line"}
+                                {icon icon="trash" size="fw" class="text-danger"} {text key="h-sales.bill-form-delete-line"}
                             </a>
                         </li>
                     </ul>
@@ -112,12 +112,12 @@
             <div class="col-xs-1 line-tax-rate" min="0" max="100" e-style="{width : width1 + 'px'}"><input type="number" e-value="taxRate" e-unless="isTitle"/></div>
         </div>
         <ol e-if="isTitle" class="children">
-            <li e-each="{$data : $this.content}" e-template="'quote-line-template'"></li>
+            <li e-each="{$data : $this.content}" e-template="'bill-line-template'"></li>
         </ol>
     </template>
 
-    <ol class="content-wrapper sortable" id="quote-content-container">
-        <li e-each="{$data : $root.content}" e-template="'quote-line-template'"></li>
+    <ol class="content-wrapper sortable" id="bill-content-container">
+        <li e-each="{$data : $root.content}" e-template="'bill-line-template'"></li>
     </ol>
 {/assign}
 
@@ -130,26 +130,26 @@
 {assign name="formContent"}
     {{ $form->fieldsets['submits'] }}
 
-    {tabs id="quote-accordion" tabs="{array(
+    {tabs id="bill-accordion" tabs="{array(
         array(
-            'title' => Lang::get('h-sales.quote-form-panel-identity-title'),
+            'title' => Lang::get('h-sales.bill-form-panel-identity-title'),
             'type' => 'primary',
             'content' => $identity,
-            'id' => 'h-sales-quote-form-header'
+            'id' => 'h-sales-bill-form-header'
         ),
         array(
-            'title' => Lang::get('h-sales.quote-form-panel-content-title'),
+            'title' => Lang::get('h-sales.bill-form-panel-content-title'),
             'type' => 'primary',
             'content' => $content,
-            'id' => 'h-sales-quote-form-body'
+            'id' => 'h-sales-bill-form-body'
         ),
         array(
-            'title' => Lang::get('h-sales.quote-form-panel-footer-title'),
+            'title' => Lang::get('h-sales.bill-form-panel-footer-title'),
             'type' => 'primary',
             'content' => $footer,
-            'id' => 'h-sales-quote-form-footer'
+            'id' => 'h-sales-bill-form-footer'
         ))}"}
 
 {/assign}
 
-{form id="h-sales-quote-form" content="{$formContent}"}
+{form id="h-sales-bill-form" content="{$formContent}"}

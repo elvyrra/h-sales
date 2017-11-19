@@ -1,10 +1,10 @@
 'use strict';
 
 require(['app', 'emv', 'lang', 'jquery'], function(app, EMV, Lang, $) {
-    const form = app.forms['h-sales-quote-form'];
+    const form = app.forms['h-sales-bill-form'];
     let maxId = 0;
 
-    const fullWidth = $('#quote-accordion').width();
+    const fullWidth = $('#bill-accordion').width();
     const colWidth = fullWidth / 12;
     const width5 = colWidth * 5;
 
@@ -15,9 +15,9 @@ require(['app', 'emv', 'lang', 'jquery'], function(app, EMV, Lang, $) {
         /**
          * Constructor
          * @param {Object} data The initial line data
-         * @param {Quote} quote The parent quote
+         * @param {Quote} bill The parent bill
          */
-        constructor(data, quote) {
+        constructor(data, bill) {
             maxId++;
 
             super({
@@ -88,7 +88,7 @@ require(['app', 'emv', 'lang', 'jquery'], function(app, EMV, Lang, $) {
 
                     number : function() {
                         const parent = this.getParent();
-                        const index = (parent || quote).content.indexOf(this);
+                        const index = (parent || bill).content.indexOf(this);
 
                         if(index === -1) {
                             return 0;
@@ -101,11 +101,11 @@ require(['app', 'emv', 'lang', 'jquery'], function(app, EMV, Lang, $) {
                         return `${parent.number}.${index + 1}`;
                     }
                 }
-            }, quote);
+            }, bill);
 
             this.constructor.instancesById[this.id] = this;
             this.content = this.isTitle && data.content ?
-                data.content.map((child) => new QuoteLine(child, quote)) :
+                data.content.map((child) => new QuoteLine(child, bill)) :
                 [];
         }
 
@@ -124,7 +124,7 @@ require(['app', 'emv', 'lang', 'jquery'], function(app, EMV, Lang, $) {
     QuoteLine.instancesById = {};
 
     /**
-     * Manage the quote object
+     * Manage the bill object
      */
     class Quote extends EMV {
         /**
@@ -168,14 +168,14 @@ require(['app', 'emv', 'lang', 'jquery'], function(app, EMV, Lang, $) {
         }
 
         /**
-         * Initialise the content of the quote
+         * Initialise the content of the bill
          */
         init() {
             const content = JSON.parse(form.inputs.content.val()).map((line) => new QuoteLine(line, this));
 
             this.content = content;
 
-            $('#quote-content-container').sortable({
+            $('#bill-content-container').sortable({
                 handle: '.move-line',
                 placeholder : '<li class="row placeholder"></li>',
 
@@ -240,7 +240,7 @@ require(['app', 'emv', 'lang', 'jquery'], function(app, EMV, Lang, $) {
         }
 
         /**
-         * Add a line to the quote
+         * Add a line to the bill
          *
          * @param {QuoteLine} parentLine The parent line to add the line into
          * @param {int}       index      The index to insert the line at.
@@ -313,11 +313,11 @@ require(['app', 'emv', 'lang', 'jquery'], function(app, EMV, Lang, $) {
     };
 
 
-    const quote = new Quote();
+    const bill = new Quote();
 
-    window.quote = quote;
+    window.bill = bill;
 
-    quote.init();
+    bill.init();
 
-    quote.$apply(form.node.get(0));
+    bill.$apply(form.node.get(0));
 })();

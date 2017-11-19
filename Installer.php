@@ -28,6 +28,10 @@ class Installer extends PluginInstaller{
         Quote::dropTable();
         Client::dropTable();
         DocTempalte::dropTable();
+
+        Option::delete($this->_plugin . '.quote-number-pattern');
+        Option::delete($this->_plugin . '.bill-number-pattern');
+        Option::delete($this->_plugin . '.settings');
     }
 
     /**
@@ -50,6 +54,9 @@ class Installer extends PluginInstaller{
             ),
             'template' => array(
                 'edit' => Permission::add($this->_plugin . '.edit-template', 0, 0)
+            ),
+            'setting' => array(
+                'edit' => Permission::add($this->_plugin . '.edit-setting', 0, 0)
             )
         );
 
@@ -97,9 +104,19 @@ class Installer extends PluginInstaller{
             'icon' => 'picture-o'
         ));
 
+        $settingsItem = MenuItem::add(array(
+            'plugin' => $this->_plugin,
+            'name' => 'settings',
+            'parentId' => $menu->id,
+            'labelKey' => $this->_plugin . '.menu-item-settings-title',
+            'action' => 'h-sales-settings',
+            'icon' => 'cogs'
+        ));
+
         // Set default options
         Option::set($this->_plugin . '.quote-number-pattern', 'EST-{year4}{month}-{counter}');
         Option::set($this->_plugin . '.bill-number-pattern', 'BIL-{year4}{month}-{counter}');
+
     }
 
     /**

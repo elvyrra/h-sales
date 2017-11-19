@@ -23,7 +23,7 @@ class QuoteActionsWidget extends Widget {
                 'icon' => 'print',
                 'label' => Lang::get($this->_plugin . '.quote-sidebar-print-button'),
                 'href' => App::router()->getUri('h-sales-quote-pdf', array(
-                    'quoteId' => $this->quote->id
+                    'id' => $this->quote->id
                 )),
                 'target' => '_blank'
             ));
@@ -34,7 +34,7 @@ class QuoteActionsWidget extends Widget {
                 'icon' => 'envelope',
                 'label' => Lang::get($this->_plugin . '.quote-sidebar-send-button'),
                 'href' => App::router()->getUri('h-sales-quote-send', array(
-                    'quoteId' => $this->quote->id
+                    'id' => $this->quote->id
                 )),
                 'target' => 'newtab'
             ));
@@ -47,9 +47,7 @@ class QuoteActionsWidget extends Widget {
                 'href' => App::router()->getUri(
                     'h-sales-bill-file',
                     array(
-                        'id' => 0
-                    ),
-                    array(
+                        'id' => 0,
                         'from' => $this->quote->id
                     )
                 ),

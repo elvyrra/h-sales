@@ -30,6 +30,11 @@ App::router()->prefix('/h-sales', function () {
         // Display quote file
         App::router()->get('h-sales-quote-file', '/quotes/{id}', array('where' => array('id' => '\d+'), 'action' => 'QuoteController.edit'));
 
+        App::router()->get('h-sales-quote-pdf', '/quotes/{id}', array('where' => array('id' => '\d+'), 'action' => 'QuoteController.pdf'));
+
+        App::router()->get('h-sales-quote-send', '/quotes/{id}', array('where' => array('id' => '\d+'), 'action' => 'QuoteController.send'));
+
+        // Edit
         App::router()->auth(App::session()->isAllowed('h-sales.edit-quote'), function () {
             // Insert / Modify quote file
             App::router()->any('h-sales-quote-edit', '/quote/{id}', array('where' => array('id' => '\d+'), 'action' => 'QuoteController.edit'));
@@ -44,7 +49,10 @@ App::router()->prefix('/h-sales', function () {
         App::router()->get('h-sales-bills-list', '/bills-list', array('action' => 'BillController.displayList'));
 
         // Display bill file
-        App::router()->get('h-sales-bill-file', '/bills/{id}', array('where' => array('id' => '\d+'), 'action' => 'BillController.edit'));
+        App::router()->get('h-sales-bill-file', '/bills/{id}/{from}', array('where' => array(
+            'id' => '\d+',
+            'from' => '\d+'
+        ), 'action' => 'BillController.edit'));
 
         App::router()->auth(App::session()->isAllowed('h-sales.edit-bill'), function () {
             // Insert / Modify bill file
@@ -62,4 +70,14 @@ App::router()->prefix('/h-sales', function () {
         // Edit document template
         App::router()->any('h-sales-template-edit', '/templates/{id}', array('where' => array('id' => '\d+'), 'action' => 'TemplateController.edit'));
     });
+
+
+    /**
+     * Settings
+     */
+    App::router()->auth(App::session()->isAllowed('h-sales.edit-settings'), function () {
+        // Insert / Modify client file
+        App::router()->any('h-sales-settings', '/settings', array('action' => 'SettingsController.index'));
+    });
+
 });

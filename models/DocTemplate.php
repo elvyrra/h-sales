@@ -36,4 +36,26 @@ class DocTemplate extends Model
             'type' => 'MEDIUMTEXT'
         )
     );
+
+
+    /**
+     * Get the directory contaning the article logo
+     */
+    public function getLogoDir(){
+        return $this->getStaticFilesRootDir() . 'logo/';
+    }
+
+    /**
+     * Get the article logo filename
+     */
+    public function getLogoFilename($logo){
+        return $this->getLogoDir() . $logo;
+    }
+
+    /**
+     * Get the article logo URL
+     */
+    public function getLogoUrl($logo){
+        return $this->getStaticFilesRootUrl() . 'logo/' . $logo;
+    }
 }

@@ -155,7 +155,8 @@ class QuoteController extends Controller{
                         'default' => $client ? $client->getDisplayedName() : '',
                         'attributes' => array(
                             'e-autocomplete' => '{source : "' . App::router()->getUri('h-sales-autocomplete-clients') . '", change : onClientChange}',
-                            'e-value' => 'client.name'
+                            'e-value' => 'client.label',
+                            'style' => "width: 300px;",
                         )
                     )),
 
@@ -218,6 +219,9 @@ class QuoteController extends Controller{
                         'name' => 'title',
                         'required' => true,
                         'maxLength' => 256,
+                        'attributes' => array(
+                            'style' => "width: 300px;",
+                        ),
                         'label' => Lang::get($this->_plugin . '.quote-form-title-label'),
                     )),
 
@@ -234,7 +238,7 @@ class QuoteController extends Controller{
 
                     new RadioInput(array(
                         'name' => 'billed',
-                        'disabled' => true,
+                        'readonly' => true,
                         'label' => 'Facturé ?',
                         'options' => array(
                             0 => Lang::get('main.no-txt'),
@@ -345,6 +349,41 @@ class QuoteController extends Controller{
         else{
             return $form->treat();
         }
+    }
+
+
+    public function pdf(){
+        $quote = Quote::getById($this->id);
+
+        if($quote){
+            $client = Client::getById($quote->clientId);
+        }
+        else{
+            $client = null;
+            return;
+        }
+
+        $view = View::make($this->getPlugin()->getView('default-pdf.tpl'), array(
+            'content' => $quote->content,
+            'quote' => $quote
+        ));
+
+        $dom = \phpQuery::newDocument($view);
+        $dom->find('script')->remove();
+        $dom->find('*:first')
+            ->before('<link rel="stylesheet" href="' . $this->getPlugin()->getCssUrl('default-pdf.less') . '" />');
+
+        $view = $dom->htmlOuter();
+        $pdf = new PDF(
+            $quote->title,
+            $view,
+            array(
+                'orientation' => 'Portrait', //Portrait  //Landscape
+            )
+        );
+
+        $pdf->display('h-agenda.pdf');
+        //$pdf->download('h-agenda.pdf');
     }
 
 
